@@ -56,9 +56,9 @@ var app = {
                 mobile = $('#txtMobile').val();
                 localStorage.setItem('user', mobile);
                 $('#main_btn').prop('disabled', true).text('Sending OTP...');
-                $.ajax({ url: "http://platterexoticfood.com/pladmin/manage_api/do_login_restaurant", type: "post", dataType: "JSON", data: { mobile: mobile } }).done(function (reply) {
+                $.ajax({ url: "http://platterexoticfood.com/pladmin/manage_api/do_login_employee", type: "post", dataType: "JSON", data: { mobile: mobile } }).done(function (reply) {
                     OTP = reply.otp;
-                    console.log(OTP);
+                    localStorage.setItem('otp', OTP);
                     if(OTP==""){
                         window.plugins.toast.showLongBottom('Mobile not register with us');
                         // popup.close();
@@ -76,6 +76,7 @@ var app = {
         // This Section For OTP Verification
         $('#btnLogin').click(function () {
             // alert($('#txtOTP').val());
+			OTP = localStorage.getItem('islogin', 1);
             if (OTP == $('#txtOTP').val()) {
                 localStorage.setItem('islogin', 1);
                 window.location.href="home.html";
