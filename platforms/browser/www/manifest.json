@@ -1,0 +1,11 @@
+{
+  "background_color": "#FFF",
+  "display": "standalone",
+  "name": "platterdeliveryboy",
+  "short_name": "platterdeliveryboy",
+  "version": "com.phonegap.helloworld",
+  "description": "Platter Delivery Boy App",
+  "author": "Projukti Team",
+  "icons": [],
+  "start_url": "index.html"
+}
