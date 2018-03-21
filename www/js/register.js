@@ -55,22 +55,16 @@ var app = {
             if ($('#txtMobile').val().length === 10) {
                 mobile = $('#txtMobile').val();
                 localStorage.setItem('user', mobile);
-                $('#btnRegister').prop('disabled', true).text('Sending OTP...');
-                $.ajax({ 
-						url: "http://platterexoticfood.com/pladmin/Manage_api/do_login_employee", 
-						type: "post", 
-						dataType: "JSON", 
-						data: { mobile: mobile } 
-					}).done(function (reply) {
-						OTP = reply.otp;
-						localStorage.setItem('otp', OTP);
-						console.log(OTP);
-						if(OTP==""){
-							window.plugins.toast.showLongBottom('Mobile not register with us');
-							// popup.close();
-							// $('#mobile-popup').open();
-							window.location.href ="register.html";
-						}
+                $('#main_btn').prop('disabled', true).text('Sending OTP...');
+                $.ajax({ url: "http://platterexoticfood.com/pladmin/manage_api/do_login_restaurant", type: "post", dataType: "JSON", data: { mobile: mobile } }).done(function (reply) {
+                    OTP = reply.otp;
+                    console.log(OTP);
+                    if(OTP==""){
+                        window.plugins.toast.showLongBottom('Mobile not register with us');
+                        // popup.close();
+                        // $('#mobile-popup').open();
+                        window.location.href ="register.html";
+                    }
                     
                 }).fail(function (err) {
                     window.plugins.toast.showLongBottom('Enter a valid mobile number');
@@ -81,9 +75,7 @@ var app = {
 
         // This Section For OTP Verification
         $('#btnLogin').click(function () {
-            //alert($('#txtOTP').val());
-			OTP = localStorage.getItem('otp');
-			//alert(OTP);
+            // alert($('#txtOTP').val());
             if (OTP == $('#txtOTP').val()) {
                 localStorage.setItem('islogin', 1);
                 window.location.href="home.html";
