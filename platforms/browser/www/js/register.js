@@ -57,7 +57,7 @@ var app = {
                 localStorage.setItem('user', mobile);
                 $('#btnRegister').prop('disabled', true).text('Sending OTP...');
                 $.ajax({ 
-						url: "http://platterexoticfood.com/pladmin/manage_api/do_login_employee", 
+						url: "http://platterexoticfood.com/pladmin/Manage_api/do_login_employee", 
 						type: "post", 
 						dataType: "JSON", 
 						data: { mobile: mobile } 
