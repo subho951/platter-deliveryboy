@@ -76,7 +76,7 @@ var app = {
         // This Section For OTP Verification
         $('#btnLogin').click(function () {
             // alert($('#txtOTP').val());
-			OTP = localStorage.getItem('islogin', 1);
+			OTP = localStorage.getItem('otp');
             if (OTP == $('#txtOTP').val()) {
                 localStorage.setItem('islogin', 1);
                 window.location.href="home.html";
