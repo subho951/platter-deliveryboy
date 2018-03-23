@@ -85,6 +85,7 @@ var app = {
     requestOTP: function () {
         if($('#main_inp').val().length === 10) {
             mobile = $('#main_inp').val();
+			localStorage.setItem('mobile', mobile);
             $('#main_btn').prop('disabled', true).text('Sending OTP...');
             $.ajax({url:"http://platterexoticfood.com/pladmin/manage_api/request_otp",type:"post",dataType:"JSON",data:{mobile:mobile}}).done(function (reply) {
                 OTP = reply.otp;
@@ -107,7 +108,7 @@ var app = {
             $.ajax({url:"http://platterexoticfood.com/pladmin/manage_api/do_login_employee",type:"post",dataType:"JSON",data:{mobile:mobile}}).done(function (reply) {
                 console.log(reply);
                 if(reply.success) {
-                    localStorage.setItem('mobile', mobile);
+                    localStorage.setItem('mobile', reply.mobile);
                     localStorage.setItem('delivery_name',reply.boy);
                     app.fadeTo('home.html', 300);
                 } else {

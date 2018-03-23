@@ -59,12 +59,17 @@ var app = {
                 $.ajax({ url: "http://platterexoticfood.com/pladmin/manage_api/do_login_employee", type: "post", dataType: "JSON", data: { mobile: mobile } }).done(function (reply) {
                     OTP = reply.otp;
                     localStorage.setItem('otp', OTP);
+					localStorage.setItem('BOY', reply.boy);
+					
                     if(OTP==""){
                         window.plugins.toast.showLongBottom('Mobile not register with us');
                         // popup.close();
                         // $('#mobile-popup').open();
-                        window.location.href ="register.html";
+                        window.location.href ="register.html";						
                     }
+					else{						
+						window.location.href ="register.html#otp-popup";
+					}
                     
                 }).fail(function (err) {
                     window.plugins.toast.showLongBottom('Enter a valid mobile number');

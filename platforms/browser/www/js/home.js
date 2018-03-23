@@ -40,8 +40,8 @@ var app = {
         // $('ul.tabs').tabs({swipeable:true});
         // app.receivedEvent('deviceready');
         
-        mobile = localStorage.getItem('mobile');
-        $('#deliv-name').html(localStorage.delivery_name);
+        mobile = localStorage.getItem('user');
+        $('#deliv-name').html(localStorage.getItem('BOY'));
         app.updateOrderListings();
         BackgroundGeolocation.configure({
             desiredAccuracy: BackgroundGeolocation.HIGH_ACCURACY,
@@ -63,7 +63,8 @@ var app = {
                 mobile: mobile
             }
         });
-        BackgroundGeolocation.on('location', function(location) {
+        
+		BackgroundGeolocation.on('location', function(location) {
             // handle your locations here
             // to perform long running operation on iOS
             // you need to create background task
@@ -191,7 +192,12 @@ var app = {
         }).done(function (reply) {
             var ord = '';
             var hst = '';
-            for (orderIndex in reply.open_order) {
+			console.log(reply);
+			$('#cust-name').text(reply.open_order[0].customer.customer_name);
+			$('#cust-mobile').text(reply.open_order[0].customer.customer_mobile);
+			$('#cust-shipping-address').text(reply.open_order[0].customer.customer_address);			
+			$('#cust-tel').attr('href',"Tel:"+reply.open_order[0].customer.customer_mobile);
+            /* for (orderIndex in reply.open_order) {
                 ord += '<div class="card-panel no-padding">\n' +
                     '<table class="striped">\n' +
                     '<thead>\n' +
@@ -261,48 +267,7 @@ var app = {
                 ord += '</tfoot>\n' +
                     '</table>\n' +
                     '</div>';
-            }
-            for (orderIndex in reply.close_order) {
-                hst += '<div class="card-panel no-padding">\n' +
-                    '<table class="striped">\n' +
-                    '<thead>\n' +
-                    '<tr>\n' +
-                    '<th colspan="3">ORDER ID: '+reply.close_order[orderIndex].order_no+'</th>\n' +
-                    '</tr>\n' +
-                    '<tr>\n' +
-                    '<th>Sl.</th>\n' +
-                    '<th>Menu Item</th>\n' +
-                    '<th>Qty</th>\n' +
-                    '</tr>\n' +
-                    '</thead>\n' +
-                    '<tbody>\n';
-                for (menuIndex in reply.close_order[orderIndex].menu) {
-                    hst += '<tr>\n' +
-                        '<td>'+(parseInt(menuIndex)+1)+'</td>\n' +
-                        '<td>'+reply.close_order[orderIndex].menu[menuIndex].menuname+'</td>\n' +
-                        '<td>'+reply.close_order[orderIndex].menu[menuIndex].qty+'</td>\n' +
-                        '</tr>\n';
-                }
-                hst += '</tbody>\n' +
-                    '<tfoot>\n' +
-                    '<tr>\n' +
-                    '<td colspan="3"><strong>From:</strong> '+reply.close_order[orderIndex].restaurant.restaurant_name+' <br />\n' +
-                    reply.close_order[orderIndex].restaurant_address+'\n' +
-                    '</td>\n' +
-                    '</tr>\n' +
-                    '<tr>\n' +
-                    '<td colspan="3">\n' +
-                    '<strong>To:</strong> '+reply.close_order[orderIndex].customer.customer_name+' <br />\n' +
-                    reply.close_order[orderIndex].shipping_address+'\n' +
-                    '</td>\n' +
-                    '</tr>\n' +
-                    '<tr>\n' +
-                    '<td colspan="3">'+reply.close_order[orderIndex].delivery_date+' '+reply.close_order[orderIndex].delivery_time+'</td>\n' +
-                    '</tr>\n' +
-                    '</tfoot>\n' +
-                    '</table>\n' +
-                    '</div>';
-            }
+            } */
             $('#orders').html(ord);
             $('#history').html(hst);
         });
