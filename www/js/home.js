@@ -196,7 +196,7 @@ var app = {
 			$('#cust-name').text(reply.open_order[0].customer.customer_name);
 			$('#cust-mobile').text(reply.open_order[0].customer.customer_mobile);
 			$('#cust-shipping-address').text(reply.open_order[0].customer.customer_address);			
-			$('#cust-tel').attr('href',"tel:+91"+reply.open_order[0].customer.customer_mobile);
+			$('#cust-tel').attr('href',"tel:"+reply.open_order[0].customer.customer_mobile);
             /* for (orderIndex in reply.open_order) {
                 ord += '<div class="card-panel no-padding">\n' +
                     '<table class="striped">\n' +
