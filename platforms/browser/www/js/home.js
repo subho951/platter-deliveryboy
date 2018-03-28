@@ -192,83 +192,83 @@ var app = {
         }).done(function (reply) {
             var ord = '';
             var hst = '';
-			console.log(reply);
+            
+            /* customer details */
 			$('#cust-name').text(reply.open_order[0].customer.customer_name);
 			$('#cust-mobile').text(reply.open_order[0].customer.customer_mobile);
 			$('#cust-shipping-address').text(reply.open_order[0].customer.customer_address);			
-			$('#cust-tel').attr('href',"tel:"+reply.open_order[0].customer.customer_mobile);
-            /* for (orderIndex in reply.open_order) {
-                ord += '<div class="card-panel no-padding">\n' +
-                    '<table class="striped">\n' +
-                    '<thead>\n' +
-                    '<tr>\n' +
-                    '<th colspan="3" class="light-green lighten-4">ORDER ID: '+reply.open_order[orderIndex].order_no+' <span class="time"><i class="material-icons">alarm</i>'+reply.open_order[orderIndex].order_time+'</span></th>\n' +
-                    '</tr>\n' +
-                    '<tr>\n' +
-                    '<th>Sl.</th>\n' +
-                    '<th>Menu Item</th>\n' +
-                    '<th>Qty</th>\n' +
-                    '</tr>\n' +
-                    '</thead>\n' +
-                    '<tbody>\n';
-                for (menuIndex in reply.open_order[orderIndex].menu) {
-                    ord += '<tr>\n' +
-                        '<td>'+(parseInt(menuIndex)+1)+'</td>\n' +
-                        '<td>'+reply.open_order[orderIndex].menu[menuIndex].menuname+'</td>\n' +
-                        '<td>'+reply.open_order[orderIndex].menu[menuIndex].qty+'</td>\n' +
-                        '</tr>\n';
+            $('#cust-tel').attr('href',"tel:"+reply.open_order[0].customer.customer_mobile);
+            /* customer details */
+            /* driver details */
+            $('#driver-name').html(reply.open_order[0].driver.emp_name);
+            $('#driver-phone').text(reply.open_order[0].driver.emp_mobile);
+            $('#driver-image').attr('src',"https://platterexoticfood.com/pladmin/uploads/employee/"+reply.open_order[0].driver.photo);
+            /* driver details */
+
+            for (orderIndex in reply.open_order) {
+                
+                for (menuIndex in reply.open_order[orderIndex].menu) { 
+
+                    ord += '<li class="item-content">\n' +
+                    '<div class="item-media">\n' +
+                      '<img src="https://platterexoticfood.com/pladmin/uploads/menu/'+reply.open_order[orderIndex].menu[menuIndex].menuimg+'" width="44" />\n' +
+                    '</div>\n' +
+                    '<div class="item-inner">\n' +
+                      '<div class="item-title-row">\n' +
+                        '<div class="item-title">'+reply.open_order[orderIndex].menu[menuIndex].menuname+'</div>\n' +
+                      '</div>\n' +
+                      '<div class="item-subtitle">Quantity :\n' +
+                        '<span>'+reply.open_order[orderIndex].menu[menuIndex].qty+'</span>\n' +
+                      '</div>\n' +
+                      '<div class="item-subtitle">Amount : '+reply.open_order[orderIndex].menu[menuIndex].price+' X '+reply.open_order[orderIndex].menu[menuIndex].qty+' =\n' +
+                        '<span>'+reply.open_order[orderIndex].menu[menuIndex].subtotal+' /-</span>\n' +
+                      '</div>\n' +
+                    '</div>\n' +
+                '</li>';    
                 }
 
-                    ord += '</tbody>\n' +
-                    '<tfoot>\n' +
-                    '<tr>\n' +
-                    '<td colspan="3"><strong>From:</strong> '+reply.open_order[orderIndex].restaurant.restaurant_name+' <br />\n' +
-                        reply.open_order[orderIndex].restaurant_address+'\n' +
-                    '</td>\n' +
-                    '</tr>\n' +
-                    '<tr>\n' +
-                    '<td colspan="3">\n' +
-                    '<strong>To:</strong> '+reply.open_order[orderIndex].customer.customer_name+' <br />\n' +
-                        reply.open_order[orderIndex].shipping_address+'\n' +
-                    '</td>\n' +
-                    '</tr>\n';
+                
+            /* driver details */
+            $('#totalQuantity').text(reply.open_order[0].totalQuantity);
+            $('#totalAmount').text(reply.open_order[0].subtotal);
+            /* driver details */
 
-                if(reply.open_order[orderIndex].step===1) {
-                    ord += '<tr>\n' +
-                        '<td colspan="3">\n' +
-                        'Ready to pickup? <a class="waves-effect waves-green btn-flat" href="javascript:app.acceptDeliveryRequest(' + reply.open_order[orderIndex].restaurant.lattitude + ',' + reply.open_order[orderIndex].restaurant.longitude + ',' + reply.open_order[orderIndex].order_id + ')">Drive to Restaurant</a>\n' +
-                        '</td>\n' +
-                        '</tr>\n';
-                } else if(reply.open_order[orderIndex].step===2) {
-                    ord += '<tr>\n' +
-                        '<td colspan="3">\n' +
-                        'Ready to deliver? <a class="waves-effect waves-green btn-flat" href="javascript:app.startDelivery('+reply.open_order[orderIndex].latitude+','+reply.open_order[orderIndex].longitude+','+reply.open_order[orderIndex].order_id+')">Drive to Customer</a> <a class="waves-effect waves-green btn-flat" href="javascript:app.navigateTo('+reply.open_order[orderIndex].latitude+','+reply.open_order[orderIndex].longitude+')">Drive to Restaurant</a>\n' +
-                        '</td>\n' +
-                        '</tr>\n';
-                } else if(reply.open_order[orderIndex].step===3) {
-                    if(reply.open_order[orderIndex].payment_mode==='cod'){
-                        ord += '<tr>\n' +
-                            '<td colspan="3">\n' +
-                            'Cash to be collected : INR '+reply.open_order[orderIndex].subtotal+'\n' +
-                            '</td>\n' +
-                            '</tr>\n';
-                    }
-                    ord += '<tr>\n' +
-                        '<td colspan="3">\n' +
-                        'Contact Customer? <a class="waves-effect waves-green btn-flat" href="tel:'+reply.open_order[orderIndex].customer.customer_mobile+'">Call Customer</a>\n' +
-                        '</td>\n' +
-                        '</tr>\n' +
-                        '<tr>\n' +
-                        '<td colspan="3">\n' +
-                        'Delivery complete? <a class="waves-effect waves-green btn-flat" href="javascript:app.finishDelivery('+reply.open_order[orderIndex].order_id+')">Yes</a> <a class="waves-effect waves-green btn-flat" href="javascript:app.navigateTo('+reply.open_order[orderIndex].latitude+','+reply.open_order[orderIndex].longitude+')">Drive to Customer</a>\n' +
-                        '</td>\n' +
-                        '</tr>\n';
-                }
-                ord += '</tfoot>\n' +
-                    '</table>\n' +
-                    '</div>';
-            } */
-            $('#orders').html(ord);
+                // if(reply.open_order[orderIndex].step===1) {
+                //     ord += '<tr>\n' +
+                //         '<td colspan="3">\n' +
+                //         'Ready to pickup? <a class="waves-effect waves-green btn-flat" href="javascript:app.acceptDeliveryRequest(' + reply.open_order[orderIndex].restaurant.lattitude + ',' + reply.open_order[orderIndex].restaurant.longitude + ',' + reply.open_order[orderIndex].order_id + ')">Drive to Restaurant</a>\n' +
+                //         '</td>\n' +
+                //         '</tr>\n';
+                // } else if(reply.open_order[orderIndex].step===2) {
+                //     ord += '<tr>\n' +
+                //         '<td colspan="3">\n' +
+                //         'Ready to deliver? <a class="waves-effect waves-green btn-flat" href="javascript:app.startDelivery('+reply.open_order[orderIndex].latitude+','+reply.open_order[orderIndex].longitude+','+reply.open_order[orderIndex].order_id+')">Drive to Customer</a> <a class="waves-effect waves-green btn-flat" href="javascript:app.navigateTo('+reply.open_order[orderIndex].latitude+','+reply.open_order[orderIndex].longitude+')">Drive to Restaurant</a>\n' +
+                //         '</td>\n' +
+                //         '</tr>\n';
+                // } else if(reply.open_order[orderIndex].step===3) {
+                //     if(reply.open_order[orderIndex].payment_mode==='cod'){
+                //         ord += '<tr>\n' +
+                //             '<td colspan="3">\n' +
+                //             'Cash to be collected : INR '+reply.open_order[orderIndex].subtotal+'\n' +
+                //             '</td>\n' +
+                //             '</tr>\n';
+                //     }
+                //     ord += '<tr>\n' +
+                //         '<td colspan="3">\n' +
+                //         'Contact Customer? <a class="waves-effect waves-green btn-flat" href="tel:'+reply.open_order[orderIndex].customer.customer_mobile+'">Call Customer</a>\n' +
+                //         '</td>\n' +
+                //         '</tr>\n' +
+                //         '<tr>\n' +
+                //         '<td colspan="3">\n' +
+                //         'Delivery complete? <a class="waves-effect waves-green btn-flat" href="javascript:app.finishDelivery('+reply.open_order[orderIndex].order_id+')">Yes</a> <a class="waves-effect waves-green btn-flat" href="javascript:app.navigateTo('+reply.open_order[orderIndex].latitude+','+reply.open_order[orderIndex].longitude+')">Drive to Customer</a>\n' +
+                //         '</td>\n' +
+                //         '</tr>\n';
+                // }
+                // ord += '</tfoot>\n' +
+                //     '</table>\n' +
+                //     '</div>';
+            } 
+            $('#ordered-items').html(ord);
             $('#history').html(hst);
         });
         setTimeout(function () {

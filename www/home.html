@@ -80,7 +80,7 @@
 			  <!-- Top Navbar -->
 		<div class="navbar">
 			<div class="navbar-inner">
-				<span id="deliv-name"></span><br>
+				<span id="deliv-name" style="padding-left: 5px;"></span><br>
 				<div class="title sliding">Current Orders</div>
 			</div>
 		</div>
@@ -89,9 +89,9 @@
 				<div class="card-header">Ordered Items </div>
 					<div class="card-content">
 						<div class="list media-list">
-						  <ul>
+						  <ul id="ordered-items">
 						  
-							<li class="item-content">
+							<!-- <li class="item-content">
 							  <div class="item-media">
 								<img src="img/menu1.jpg" width="44" />
 							  </div>
@@ -106,17 +106,18 @@
 								  <span>240.00 /-</span>
 								</div>
 							  </div>
-							</li>
+              </li> -->
+              
 							
 						  </ul>
 						</div>
 					</div>
 					<div class="card-footer">
 						<span>Total Quantity :
-						  <span style="color:#ef3837;">6</span>
+						  <span style="color:#ef3837;" id="totalQuantity"></span>
 						</span>
 						<span>Total Amount :
-						  <span style="color:#ef3837;">720.00/-</span>
+						  <span style="color:#ef3837;" id="totalAmount">/-</span>
 						</span>
 					</div>
 			</div>
@@ -128,14 +129,14 @@
 					  <ul>
 						<li class="item-content">
 						  <div class="item-media">
-							<img src="img/delivery.jpg" width="44" />
+							<img width="44" src="" id="driver-image" />
 						  </div>
 						  <div class="item-inner">
 							<div class="item-title-row">
-							  <div class="item-title">Sreejit Mukherjee</div>
+							  <div class="item-title" id="driver-name"></div>
 							</div>
 							<div class="item-subtitle">Phone :
-							  <span>8547965123</span>
+							  <span id="driver-phone"></span>
 							</div>
 
 						  </div>
@@ -143,7 +144,7 @@
 					  </ul>
 					</div>
 					<div class="card-footer">
-					  <a href="Tel:8981374267" class="link">Call Driver</a>
+					  <a href="tel:8981374267" class="link">Accept Order</a>
 					</div>
 				</div>
 			</div>
@@ -164,7 +165,7 @@
 
 			<div class="block-footer">
 				<br/><br/>
-				<a href="#" class="button button-raised button-fill popup-open color-red">READY TO PIKUP</a>
+				<a href="#" class="button button-raised button-fill popup-open color-red">READY TO PICKUP</a>
 			</div>
 
 		</div>
